@@ -92,6 +92,10 @@ thread_create(void (*func)())
   }
   t->state = RUNNABLE;
   // YOUR CODE HERE
+
+  // Set the thread to start running from the function pointer
+  // passed to thread_create()
+  t->pc = func;
 }
 
 void 
