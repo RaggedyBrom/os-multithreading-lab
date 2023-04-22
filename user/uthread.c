@@ -12,12 +12,8 @@
 
 
 struct thread {
-  char       stack[STACK_SIZE]; /* the thread's stack */
-  int        state;             /* FREE, RUNNING, RUNNABLE */
-
-  // Store the program counter, stack pointer, and all callee-saved registers
-  uint64     pc;
-  uint64     sp;
+  // Store the return address and all callee-saved registers
+  uint64     ra;
   uint64     s0;
   uint64     s1;
   uint64     s2;
@@ -30,6 +26,9 @@ struct thread {
   uint64     s9;
   uint64     s10;
   uint64     s11;
+
+  char       stack[STACK_SIZE]; /* the thread's stack */
+  int        state;             /* FREE, RUNNING, RUNNABLE */
 };
 struct thread all_thread[MAX_THREAD];
 struct thread *current_thread;
@@ -95,7 +94,7 @@ thread_create(void (*func)())
 
   // Set the thread to start running from the function pointer
   // passed to thread_create()
-  t->pc = func;
+  t->pc = (uint64)func;
 }
 
 void 
