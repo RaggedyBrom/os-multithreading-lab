@@ -23,7 +23,7 @@ thread_switch:
 	sd s9, 80(a0)
 	sd s10, 88(a0)
 	sd s11, 96(a0)
-	sd sp, 102(a0)
+	sd sp, 104(a0)
 
 	/* Restore new thread's registers */
 	ld ra, (a1)
@@ -39,6 +39,6 @@ thread_switch:
 	ld s9, 80(a1)
 	ld s10, 88(a1)
 	ld s11, 96(a1)
-	ld sp, 102(a1)
+	ld sp, 104(a1)
 
 	ret    /* return to ra */
