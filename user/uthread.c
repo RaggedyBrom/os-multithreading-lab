@@ -26,6 +26,7 @@ struct thread {
   uint64     s9;
   uint64     s10;
   uint64     s11;
+  uint64     sp;
 
   char       stack[STACK_SIZE]; /* the thread's stack */
   int        state;             /* FREE, RUNNING, RUNNABLE */
@@ -77,6 +78,7 @@ thread_schedule(void)
      * Invoke thread_switch to switch from t to next_thread:
      * thread_switch(??, ??);
      */
+    thread_switch((uint64)t, (uint64)next_thread);
   } else
     next_thread = 0;
 }
@@ -94,7 +96,10 @@ thread_create(void (*func)())
 
   // Set the thread to start running from the function pointer
   // passed to thread_create()
-  t->pc = (uint64)func;
+  t->ra = (uint64)func;
+  
+  // Initialize the stack pointer to the top of the stack
+  t->sp = (uint64)t->stack + STACK_SIZE;
 }
 
 void 
