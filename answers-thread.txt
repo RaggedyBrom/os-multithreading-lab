@@ -1,0 +1,16 @@
+Q: Why are there missing keys with 2 threads, but not with 1 thread?
+Identify a sequence of events with 2 threads that can lead to a key being missing.
+
+A: There are not as many keys as there should be because the the two threads at
+some point attempted to store the same key and clobbered over what was already there.
+A possible sequence that could cause this is -
+    Thread A chooses a value to use as a key
+    It checks if the key already exists in the table, and it does not (currently)
+    Thread A gets descheduled by the OS
+    Thread B chooses the same key that A did
+    It checks if the key already exists, and it still doesn't
+    Thread B stores a value for that key
+    Some time passes
+    Thread A gets scheduled again
+    It returns to execution just after it checked if the key was vacant
+    Thread A does not check again and overwrites the value stored by B
