@@ -1,0 +1,5 @@
+Switching between threads:  3 hrs
+Using threads:              0.5 hrs
+Barrier:                    1 hr
+----------------------------------------
+Total time:                 4.5 hrs                  
